@@ -1,7 +1,5 @@
 package edu.inconcept.netflix.controller;
 
-import edu.inconcept.netflix.entity.Account;
-import edu.inconcept.netflix.service.AccountService;
 import edu.inconcept.netflix.service.impl.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
