@@ -1,92 +1,111 @@
 package edu.inconcept.netflix.service;
 
-import edu.inconcept.netflix.entity.Director;
-import edu.inconcept.netflix.entity.Genre;
-import edu.inconcept.netflix.entity.Movie;
-import edu.inconcept.netflix.entity.TitleType;
-import edu.inconcept.netflix.service.dto.Converter;
-import edu.inconcept.netflix.service.dto.MovieDto;
+import edu.inconcept.netflix.entity.*;
+import edu.inconcept.netflix.service.impl.AccountServiceImpl;
+import edu.inconcept.netflix.service.impl.DirectorServiceImpl;
+import edu.inconcept.netflix.service.impl.GenreServiceImpl;
+import edu.inconcept.netflix.service.impl.TitleTypeServiceImpl;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
-
+@Service
 public class MovieCSVParserService {
 
+    @Autowired
+    TitleTypeServiceImpl titleTypeService;
 
-    public static List<MovieDto> parser(String path) throws IOException, ParseException {
+    @Autowired
+    DirectorServiceImpl directorService;
+
+    @Autowired
+    GenreServiceImpl genereService;
+
+    @Autowired
+    MovieService movieService;
+
+    @Autowired
+    AccountServiceImpl accountService;
+
+    public void parse(String path) throws IOException, ParseException {
         Reader reader = Files.newBufferedReader(Paths.get(path));
         CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
                 .withFirstRecordAsHeader()
                 .withIgnoreHeaderCase()
                 .withTrim());
 
-        List<Movie> movies = new ArrayList<>();
-        Movie movie = new Movie();
         for (CSVRecord csvRecord : csvParser) {
-
             String position = csvRecord.get("position");
             String constant = csvRecord.get("const");
             String created = csvRecord.get("created");
             String title = csvRecord.get("title");
-            String titleType = csvRecord.get("title type");
-            String director = csvRecord.get("directors");
-            String rating = csvRecord.get("IMDb rating");
+            String titleTypeName = csvRecord.get("title type");
+            String directorName = csvRecord.get("directors");
+            String imdbRating = csvRecord.get("IMDb rating");
+            String blanaidRated = csvRecord.get("Blanaid rated");
             String runtime = csvRecord.get("runtime (mins)");
             String genre = csvRecord.get("genres");
-            String[] g = genre.split(",");
-            List<Genre> genreList = new ArrayList<>() ;
-            for(int i = 0; i < g.length ; i++){
-                genreList.add(new Genre(g[i]));
-            }
             String numberVotes = csvRecord.get("num. votes");
             String releaseDate = csvRecord.get("Release Date (month/day/year)");
             String url = csvRecord.get("url");
 
-
+            Movie movie = new Movie();
             movie.setId(Long.parseLong(position));
             movie.setConstant(constant);
-            movie.setCreatedDate(new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss").parse(created));
             movie.setTitle(title);
-            movie.setTitleType(doesExistByTitleType(movies, titleType) ? movie.getTitleType() : new TitleType(titleType));
-            movie.setDirector(doesExistByDirector(movies, director) ? movie.getDirector() : new Director(director));
-            movie.setRating(Double.parseDouble(rating));
+            TitleType titleType = titleTypeService.findTitleTypeByName(titleTypeName);
+            movie.setTitleType(titleType == null ? new TitleType(titleTypeName) : titleType);
+            Director director = directorService.findDirectorByName(directorName);
+            movie.setDirector(director == null ? new Director(directorName) : director);
+
+            movie.setRating(Double.parseDouble(imdbRating));
             movie.setRuntime(Integer.parseInt(runtime));
-            movie.setGenres(genreList) ;
+            movie.setGenres(getGenreList(genre.split(",")));
             movie.setNumberVotes(Long.parseLong(numberVotes));
-            movie.setReleaseDate((java.sql.Date) new SimpleDateFormat("dd-mm-yyyy").parse(releaseDate));
+            movie.setReleaseDate(parseDate(releaseDate));
             movie.setUrl(url);
 
-            movies.add(movie);
-        }
-        return Converter.mapMovieEntityToDtos(movies);
+            movie = movieService.add(movie);
 
-    }
-    private static boolean doesExistByTitleType(List<Movie> movies ,String titleType){
-        for(Movie movie: movies){
-            if( movie.getTitleType().getName().equals(titleType)){
-                return true;
-            }
+            Rating rating = new Rating();
+            Account account = new Account();
+            rating.setMovie(movie);
+            rating.setCreatedDate(parseDate(created));
+            rating.setBlanaidRated(Integer.parseInt(blanaidRated));
+            rating.setAccount(accountService.findAccountByID(account.getId()));
         }
-        return false;
     }
 
-    private static boolean doesExistByDirector(List<Movie> movies ,String directorName){
-        for(Movie movie: movies){
-            if( movie.getDirector().getName().equals(directorName)){
-                return true;
-            }
+    private List<Genre> getGenreList(String [] genres){
+        List<Genre> genreList = new ArrayList<>();
+        for (String genreNmae : genres){
+            Genre genre = genereService.findGenreByName(genreNmae);
+            genreList.add(genre == null ? new Genre(genreNmae) : genre);
         }
-        return false;
+        return genreList;
     }
 
+    private Date parseDate(String relesadate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate dateTime = LocalDate.parse(relesadate, formatter);
+        return Date.valueOf(dateTime);
+    }
+    private java.util.Date parseJavaUtilData(String createdDate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd  HH:mm:ss yyyy");
+        LocalDate dateTime = LocalDate.parse(createdDate, formatter);
+        return Date.valueOf(dateTime);
+    }
 }

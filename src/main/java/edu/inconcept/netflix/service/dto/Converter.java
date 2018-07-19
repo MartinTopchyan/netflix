@@ -93,7 +93,7 @@ public class Converter {
 
     public static DirectorDto mapDirectorEntityToDto(Director director){
         DirectorDto directorDto = new DirectorDto();
-        directorDto.setFirstName(director.getName());
+        directorDto.setName(director.getName());
         directorDto.setId(director.getId());
         return directorDto;
 
@@ -154,7 +154,7 @@ public class Converter {
 
     public static Director mapDirectorDtoToEntity(DirectorDto directorDto){
         Director director = new Director();
-        director.setName(directorDto.getFirstName());
+        director.setName(directorDto.getName());
         director.setId(directorDto.getId());
         return director;
     }

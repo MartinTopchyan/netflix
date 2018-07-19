@@ -17,8 +17,8 @@ public class Movie {
     private String title;
     @Column(name = "created",nullable = false)
     private Date createdDate;
-    @Column(name = "rating")
-    private Double rating;
+    @Column(name = "iMDbrating")
+    private Double iMDbrating;
     @Column(name = "runtime")
     private Integer runtime;
     @Column(name = "number_votes")
@@ -67,11 +67,11 @@ public class Movie {
     }
 
     public Double getRating() {
-        return rating;
+        return iMDbrating;
     }
 
-    public void setRating(Double rating) {
-        this.rating = rating;
+    public void setRating(Double iMDbrating) {
+        this.iMDbrating = iMDbrating;
     }
 
     public Integer getRuntime() {

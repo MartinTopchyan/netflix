@@ -18,15 +18,15 @@ import java.util.List;
 @Service
 public class MovieService {
     private MovieRepository movieRepository;
+
     @Autowired
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
     private static final Integer PAGESIZE = 3;
 
-    public MovieDto add(MovieDto movieDto)  {
-        Movie movie = movieRepository.save(Converter.mapMovieDtoToEntity(movieDto));
-        return Converter.mapMovieEntityToDto(movie);
+    public Movie add(Movie movie)  {
+      return movieRepository.save(movie);
     }
 
     public List<MovieDto> getAll() throws ServiceException {
@@ -70,10 +70,5 @@ public class MovieService {
     public MovieDto getMoviesByTitle(String title){
         Movie movie = movieRepository.findMovieByName(title);
         return Converter.mapMovieEntityToDto(movie);
-    }
-
-    public List<MovieDto> addMoviesFromCSV(String path) throws IOException, ParseException {
-        List<MovieDto> movieDtoList = MovieCSVParserService.parser(path);
-        return movieDtoList;
     }
 }

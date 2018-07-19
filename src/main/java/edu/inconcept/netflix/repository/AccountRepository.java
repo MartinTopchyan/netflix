@@ -1,13 +1,14 @@
 package edu.inconcept.netflix.repository;
 
 import edu.inconcept.netflix.domain.SystemUser;
+import edu.inconcept.netflix.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<SystemUser,Long>{
+public interface AccountRepository extends JpaRepository<Account,Long>{
 
-    Optional<SystemUser> findByName(String userName);
+     Account findAccountById(Long id);
 }
