@@ -30,4 +30,13 @@ public class GenreDto {
     public void setMovieDtos(List<MovieDto> movieDtos) {
         this.movieDtos = movieDtos;
     }
+
+    @Override
+    public String toString() {
+        return "GenreDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", movieDtos=" + movieDtos +
+                '}';
+    }
 }

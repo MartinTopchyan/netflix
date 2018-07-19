@@ -45,4 +45,6 @@ public class Genre {
     public void setMovieList(List<Movie> movieList) {
         this.movieList = movieList;
     }
+
+
 }

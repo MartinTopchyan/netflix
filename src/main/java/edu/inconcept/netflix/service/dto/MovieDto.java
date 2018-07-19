@@ -112,4 +112,22 @@ public class MovieDto {
     public void setReleaseDate(java.sql.Date releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    @Override
+    public String toString() {
+        return "MovieDto{" +
+                "id=" + id +
+                ", constant='" + constant + '\'' +
+                ", title='" + title + '\'' +
+                ", created=" + created +
+                ", rating=" + rating +
+                ", runtime=" + runtime +
+                ", numberVotes=" + numberVotes +
+                ", releaseDate=" + releaseDate +
+                ", url='" + url + '\'' +
+                ", directorDto=" + directorDto +
+                ", titleTypeDto=" + titleTypeDto +
+                ", genreDtos=" + genreDtos +
+                '}';
+    }
 }

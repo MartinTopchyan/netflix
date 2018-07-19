@@ -20,4 +20,11 @@ public class TitleTypeDto {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "TitleTypeDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

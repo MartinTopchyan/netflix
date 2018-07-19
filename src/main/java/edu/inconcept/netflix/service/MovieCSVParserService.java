@@ -57,8 +57,8 @@ public class MovieCSVParserService {
             movie.setConstant(constant);
             movie.setCreatedDate(new SimpleDateFormat("E, MMM dd yyyy HH:mm:ss").parse(created));
             movie.setTitle(title);
-            movie.setTitleType(doesExistByName(movie, titleType) ? movie.getTitleType() : new TitleType(titleType));
-            movie.setDirector(doesExistByName(movie, director) ? movie.getDirector() : new Director(director));
+            movie.setTitleType(doesExistByTitleType(movies, titleType) ? movie.getTitleType() : new TitleType(titleType));
+            movie.setDirector(doesExistByDirector(movies, director) ? movie.getDirector() : new Director(director));
             movie.setRating(Double.parseDouble(rating));
             movie.setRuntime(Integer.parseInt(runtime));
             movie.setGenres(genreList) ;
@@ -71,7 +71,22 @@ public class MovieCSVParserService {
         return Converter.mapMovieEntityToDtos(movies);
 
     }
-    private static boolean doesExistByName(Movie movie,String name){
-        return movie.getTitleType().getName().equals(name);
+    private static boolean doesExistByTitleType(List<Movie> movies ,String titleType){
+        for(Movie movie: movies){
+            if( movie.getTitleType().getName().equals(titleType)){
+                return true;
+            }
+        }
+        return false;
     }
+
+    private static boolean doesExistByDirector(List<Movie> movies ,String directorName){
+        for(Movie movie: movies){
+            if( movie.getDirector().getName().equals(directorName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
