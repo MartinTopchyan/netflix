@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MovieAffinityApplication {
+public class NetflixApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MovieAffinityApplication.class, args);
+		SpringApplication.run(NetflixApplication.class, args);
 	}
 }
