@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface AccountService {
-    Account findAccountByID(Long id);
+    Account findAccountByImdbId(Long id);
     Account add(Account account);
 }

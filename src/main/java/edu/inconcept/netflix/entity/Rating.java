@@ -11,8 +11,8 @@ public class Rating {
     private Long id;
     @Column(name = "created_date")
     private Date createdDate;
-    @Column(name = "blanaid_rated")
-    private Integer blanaidRated;
+    @Column(name = "account_rated")
+    private Integer accountRated;
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Account account;
@@ -28,12 +28,12 @@ public class Rating {
         this.createdDate = createdDate;
     }
 
-    public Integer getBlanaidRated() {
-        return blanaidRated;
+    public Integer getaccountRated() {
+        return accountRated;
     }
 
-    public void setBlanaidRated(Integer blanaidRated) {
-        this.blanaidRated = blanaidRated;
+    public void setAccountRated(Integer accountRated) {
+        this.accountRated = accountRated;
     }
 
     public Account getAccount() {
@@ -52,14 +52,5 @@ public class Rating {
         this.movie = movie;
     }
 
-    @Override
-    public String toString() {
-        return "Rating{" +
-                "createdDate=" + createdDate +
-                ", blanaidRated=" + blanaidRated +
-                ", account=" + account +
-                ", movie=" + movie +
-                '}';
-    }
 }
 

@@ -8,31 +8,43 @@ import java.util.List;
 @Entity
 @Table(name = "Movie")
 public class Movie {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "const")
     private String constant;
+
     @Column(name = "title",nullable = false)
     private String title;
-    @Column(name = "created",nullable = false)
-    private Date createdDate;
+
     @Column(name = "iMDbrating")
     private Double iMDbrating;
+
     @Column(name = "runtime")
     private Integer runtime;
+
     @Column(name = "number_votes")
     private Long numberVotes;
+
     @Column(name = "release_date")
-    private java.sql.Date releaseDate;
-    @Column(name = "url",nullable = false,unique = true)
+    private Date releaseDate;
+
+    @Column(name = "url",nullable = false)
     private String url;
-    @ManyToOne
-    @JoinColumn(name = "director_id",referencedColumnName = "id")
-    private Director director;
+
+    @ManyToMany
+    @JoinTable(
+            name = "movie_director",
+            joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "director_id",referencedColumnName = "id"))
+    private List<Director> directors;
+
     @ManyToOne
     @JoinColumn(name = "title_type",referencedColumnName = "id")
     private TitleType titleType;
+
     @ManyToMany
     @JoinTable(
             name = "movies_genre",
@@ -56,14 +68,6 @@ public class Movie {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
     }
 
     public Double getRating() {
@@ -98,12 +102,12 @@ public class Movie {
         this.url = url;
     }
 
-    public Director getDirector() {
-        return director;
+    public List<Director> getDirectors() {
+        return directors;
     }
 
-    public void setDirector(Director director) {
-        this.director = director;
+    public void setDirectors(List<Director> directors) {
+        this.directors = directors;
     }
 
     public TitleType getTitleType() {
@@ -130,11 +134,11 @@ public class Movie {
         this.constant = constant;
     }
 
-    public java.sql.Date getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(java.sql.Date releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 }

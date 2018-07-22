@@ -10,10 +10,15 @@ import org.springframework.stereotype.Service;
 public class DirectorServiceImpl implements DirectorService {
 
     @Autowired
-    DirectorRepository diretorRepository;
+    DirectorRepository directorRepository;
 
     @Override
     public Director findDirectorByName(String name) {
-        return diretorRepository.findByName(name);
+        return directorRepository.findByName(name);
+    }
+
+    @Override
+    public Director save(Director director) {
+        return directorRepository.save(director);
     }
 }

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface TitleTypeService {
     TitleType findTitleTypeByName(String titleType);
+
+    TitleType save(TitleType titleType);
 }

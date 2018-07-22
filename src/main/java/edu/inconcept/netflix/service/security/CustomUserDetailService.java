@@ -1,4 +1,4 @@
-package edu.inconcept.netflix.service;
+package edu.inconcept.netflix.service.security;
 
 import edu.inconcept.netflix.domain.CustomUserDetails;
 import edu.inconcept.netflix.domain.SystemUser;

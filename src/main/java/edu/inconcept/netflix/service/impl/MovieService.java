@@ -1,4 +1,4 @@
-package edu.inconcept.netflix.service;
+package edu.inconcept.netflix.service.impl;
 
 
 import edu.inconcept.netflix.entity.Movie;

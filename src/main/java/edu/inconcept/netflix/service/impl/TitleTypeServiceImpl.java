@@ -13,7 +13,12 @@ public class TitleTypeServiceImpl implements TitleTypeService {
 
 
     @Override
-    public TitleType findTitleTypeByName(String titleType) {
+    public TitleType findTitleTypeByName(String titleType){
         return titleTypeRepository.findByName(titleType);
+    }
+
+    @Override
+    public TitleType save(TitleType titleType) {
+        return titleTypeRepository.save(titleType);
     }
 }

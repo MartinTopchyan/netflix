@@ -6,4 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface GenreService {
     Genre findGenreByName(String name);
+
+    Genre save(Genre genre);
 }

@@ -1,17 +1,15 @@
 package edu.inconcept.netflix.controller;
 
 import edu.inconcept.netflix.entity.Movie;
-import edu.inconcept.netflix.service.MovieCSVParserService;
-import edu.inconcept.netflix.service.MovieService;
+import edu.inconcept.netflix.service.ImportMovieService;
+import edu.inconcept.netflix.service.impl.MovieService;
 import edu.inconcept.netflix.service.dto.MovieDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -19,7 +17,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
     @Autowired
-    private MovieCSVParserService movieCSVParserService;
+    private ImportMovieService importMovieService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/movies/{id}")
     public ResponseEntity<MovieDto> getMovie(@PathVariable Long id) {
@@ -61,23 +59,12 @@ public class MovieController {
         return new ResponseEntity<>(movieService.getByPage(pageNumber), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/movies")
-    public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
-        return new ResponseEntity<>(movieService.add(movie), HttpStatus.CREATED);
-    }
-
-    @RequestMapping(method = RequestMethod.DELETE, value = "/movies/delete/{id}")
-    public ResponseEntity<MovieDto> removeMovie(@PathVariable Long id) {
-        movieService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/movies/csvFile/{path}")
-    public ResponseEntity<List<Movie>> addMoviesFromCSV(@PathVariable String path) {
+    @RequestMapping(method = RequestMethod.POST, value = "/movies/import")
+    public ResponseEntity<List<Movie>> importMovies() {
         try {
-            movieCSVParserService.parse(path);
+            importMovieService.importMovie();
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (IOException | ParseException e) {
+        } catch (IOException  e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 

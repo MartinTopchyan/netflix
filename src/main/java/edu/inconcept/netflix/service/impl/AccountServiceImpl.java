@@ -11,8 +11,8 @@ public class AccountServiceImpl implements AccountService{
     @Autowired
     AccountRepository accountRepository;
     @Override
-    public Account findAccountByID(Long id) {
-        return accountRepository.findAccountById(id);
+    public Account findAccountByImdbId(Long id) {
+        return accountRepository.findAccountByAccountImdbId(id);
     }
     @Override
     public Account add(Account account) {

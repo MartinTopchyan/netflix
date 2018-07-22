@@ -13,17 +13,17 @@ public class Converter {
         MovieDto movieDto = new MovieDto();
         movieDto.setConstant(movie.getConstant());
         movieDto.setTitle(movie.getTitle());
-        movieDto.setCreated(movie.getCreatedDate());
+     //   movieDto.setCreated(movie.getCreatedDate());
         movieDto.setRating(movie.getRating());
-        movieDto.setRuntime(movie.getRuntime());
+     //   movieDto.setRuntime(movie.getRuntime());
         movieDto.setNumberVotes(movie.getNumberVotes());
-        movieDto.setReleaseDate(movie.getReleaseDate());
+    //    movieDto.setReleaseDate(movie.getReleaseDate());
         movieDto.setUrl(movie.getUrl());
-        if(movie.getDirector() != null){
-            movieDto.setDirectorDto(mapDirectorEntityToDto(movie.getDirector()));
-        }else {
-            movieDto.setDirectorDto(null);
-        }
+//        if(movie.getDirector() != null){
+//            movieDto.setDirectorDto(mapDirectorEntityToDto(movie.getDirector()));
+//        }else {
+//            movieDto.setDirectorDto(null);
+//        }
         if(movie.getTitleType() != null){
             movieDto.setTitleTypeDto(mapTitleTypeEntityToDto(movie.getTitleType()));
         }else{
@@ -54,17 +54,17 @@ public class Converter {
         Movie movie = new Movie();
         movie.setConstant(movieDto.getConstant());
         movie.setTitle(movieDto.getTitle());
-        movie.setCreatedDate(movieDto.getCreated());
+     //   movie.setCreatedDate(movieDto.getCreated());
         movie.setRating(movieDto.getRating());
-        movie.setRuntime(movieDto.getRuntime());
+     //   movie.setRuntime(movieDto.getRuntime());
         movie.setNumberVotes(movieDto.getNumberVotes());
         movie.setReleaseDate(movieDto.getReleaseDate());
         movie.setUrl(movieDto.getUrl());
-        if(movieDto.getDirectorDto() != null){
-            movie.setDirector(mapDirectorDtoToEntity(movieDto.getDirectorDto()));
-        }else {
-            movie.setDirector(null);
-        }
+//        if(movieDto.getDirectorDto() != null){
+//            movie.setDirector(mapDirectorDtoToEntity(movieDto.getDirectorDto()));
+//        }else {
+//            movie.setDirector(null);
+//        }
         if(movieDto.getTitleTypeDto() != null){
             movie.setTitleType(mapTitleTypeDtoToEntity(movieDto.getTitleTypeDto()));
         }else{
