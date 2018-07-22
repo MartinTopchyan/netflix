@@ -1,6 +1,5 @@
 package edu.inconcept.netflix.service.security;
 
-import edu.inconcept.netflix.domain.CustomUserDetails;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

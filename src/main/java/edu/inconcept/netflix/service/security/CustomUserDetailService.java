@@ -1,7 +1,6 @@
 package edu.inconcept.netflix.service.security;
 
-import edu.inconcept.netflix.domain.CustomUserDetails;
-import edu.inconcept.netflix.domain.SystemUser;
+import edu.inconcept.netflix.entity.SystemUser;
 import edu.inconcept.netflix.repository.SystemUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

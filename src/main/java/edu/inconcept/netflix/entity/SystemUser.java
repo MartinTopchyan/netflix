@@ -1,4 +1,4 @@
-package edu.inconcept.netflix.domain;
+package edu.inconcept.netflix.entity;
 
 import javax.persistence.*;
 import java.util.List;

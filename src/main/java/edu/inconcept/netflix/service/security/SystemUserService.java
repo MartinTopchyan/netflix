@@ -1,6 +1,6 @@
 package edu.inconcept.netflix.service.security;
 
-import edu.inconcept.netflix.domain.SystemUser;
+import edu.inconcept.netflix.entity.SystemUser;
 
 import java.util.Optional;
 

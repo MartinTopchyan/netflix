@@ -1,5 +1,5 @@
-package edu.inconcept.netflix.domain;
-
+package edu.inconcept.netflix.service.security;
+import edu.inconcept.netflix.entity.SystemUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class CustomUserDetails extends SystemUser implements UserDetails  {
-    public CustomUserDetails( SystemUser user) {
+    public CustomUserDetails(SystemUser user) {
         super(user);
     }
 

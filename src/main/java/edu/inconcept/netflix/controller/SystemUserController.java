@@ -1,6 +1,6 @@
 package edu.inconcept.netflix.controller;
 
-import edu.inconcept.netflix.domain.SystemUser;
+import edu.inconcept.netflix.entity.SystemUser;
 import edu.inconcept.netflix.service.security.SecurityService;
 import edu.inconcept.netflix.service.security.SystemUserService;
 import org.springframework.beans.factory.annotation.Autowired;
