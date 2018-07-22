@@ -1,6 +1,8 @@
 package edu.inconcept.netflix.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -34,11 +36,13 @@ public class Movie {
     @Column(name = "url",nullable = false)
     private String url;
 
+
     @ManyToMany
     @JoinTable(
             name = "movie_director",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "director_id",referencedColumnName = "id"))
+    @JsonIgnore
     private List<Director> directors;
 
     @ManyToOne
@@ -47,12 +51,18 @@ public class Movie {
 
     @ManyToMany
     @JoinTable(
-            name = "movies_genre",
+            name = "movie_genre",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
+    @JsonIgnore
     private List<Genre> genres;
 
+    public Movie(String constant) {
+    }
+
+    public Movie() {
+    }
 
     public Long getId() {
         return id;

@@ -43,9 +43,9 @@ public class MovieService {
         movieRepository.deleteById(id);
     }
 
-    public List<MovieDto> getByPage(Integer pageNumber) {
+    public List<Movie> getByPage(Integer pageNumber) {
         PageRequest request = new PageRequest( pageNumber - 1, PAGESIZE, Sort.Direction.DESC,"id");
-        return Converter.mapMovieEntityToDtos( movieRepository.findAll(request).getContent());
+        return  movieRepository.findAll(request).getContent();
     }
 
     public List<MovieDto> getMoviesByGenre(String genreName)throws ServiceException{
@@ -53,22 +53,19 @@ public class MovieService {
         return Converter.mapMovieEntityToDtos(movies);
     }
 
-    public List<MovieDto> getMoviesByRating(Double rating){
-        List<Movie> movies = movieRepository.findMoviesByRating(rating);
-        return Converter.mapMovieEntityToDtos(movies);
-    }
 
-    public List<MovieDto> getMoviesGreaterAvgRating(Double rating){
+
+    public List<Movie> getMoviesGreaterAvgRating(Double rating){
         List<Movie> movies = movieRepository.findMoviesGreaterAvgRating(rating);
-        return Converter.mapMovieEntityToDtos(movies);
+        return movies;
     }
     public List<MovieDto> getMoviesByDirector(String directorName){
         List<Movie> movies = movieRepository.findMoviesByDirector(directorName);
         return Converter.mapMovieEntityToDtos(movies);
     }
 
-    public MovieDto getMoviesByTitle(String title){
+    public Movie getMoviesByTitle(String title){
         Movie movie = movieRepository.findMovieByName(title);
-        return Converter.mapMovieEntityToDto(movie);
+        return movie;
     }
 }

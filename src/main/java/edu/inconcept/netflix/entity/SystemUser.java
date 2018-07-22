@@ -20,7 +20,7 @@ public class SystemUser {
     @JoinTable(name = "user_role",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private List<SystemRole> roles;
 
     public SystemUser() {
     }
@@ -73,11 +73,11 @@ public class SystemUser {
         this.lastName = lastName;
     }
 
-    public List<Role> getRoles() {
+    public List<SystemRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public void setRoles(List<SystemRole> roles) {
         this.roles = roles;
     }
 

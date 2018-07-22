@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -63,21 +65,26 @@ public class ImportMovieServiceImpl implements ImportMovieService {
                 .distinct()
                 .collect(Collectors.toMap(Function.identity(), this::getAccountByAccountImdbId));
 
+        Map<String ,Movie> movieMap = new HashMap<>();
         Movie movie;
         for (ImdbcsvRecord imdbcsvRecord : imdbcsvRecords) {
-            movie = new Movie();
             Rating rating = new Rating();
-            movie.setId(imdbcsvRecord.getId());
-            movie.setConstant(imdbcsvRecord.getConstant());
-            movie.setTitle(imdbcsvRecord.getTitle());
-            movie.setNumberVotes(imdbcsvRecord.getNumVotes());
-            movie.setRating(imdbcsvRecord.getImdbRated());
-            movie.setRuntime(imdbcsvRecord.getRuntime());
-            movie.setUrl(imdbcsvRecord.getUrl());
-            movie.setTitleType(titleTypeMap.get(imdbcsvRecord.getTitleType()));
-            movie.setDirectors(imdbcsvRecord.getDirectors().stream().map(directorMap::get).collect(Collectors.toList()));
-            movie.setGenres(imdbcsvRecord.getGenres().stream().map(genreMap::get).collect(Collectors.toList()));
-            movie = movieService.add(movie);
+            movie = movieMap.get(imdbcsvRecord.getConstant());
+            if(movie == null) {
+                movie = new Movie();
+                movie.setId(imdbcsvRecord.getId());
+                movie.setConstant(imdbcsvRecord.getConstant());
+                movie.setTitle(imdbcsvRecord.getTitle());
+                movie.setNumberVotes(imdbcsvRecord.getNumVotes());
+                movie.setRating(imdbcsvRecord.getImdbRated());
+                movie.setRuntime(imdbcsvRecord.getRuntime());
+                movie.setUrl(imdbcsvRecord.getUrl());
+                movie.setTitleType(titleTypeMap.get(imdbcsvRecord.getTitleType()));
+                movie.setDirectors(imdbcsvRecord.getDirectors().stream().map(directorMap::get).collect(Collectors.toList()));
+                movie.setGenres(imdbcsvRecord.getGenres().stream().map(genreMap::get).collect(Collectors.toList()));
+                movie = movieService.add(movie);
+                movieMap.put(movie.getConstant(),movie);
+            }
             rating.setCreatedDate(imdbcsvRecord.getCreatdeDate());
             rating.setMovie(movie);
             rating.setAccountRated(imdbcsvRecord.getAccountRated());
@@ -106,9 +113,5 @@ public class ImportMovieServiceImpl implements ImportMovieService {
         genre = genreService.save(genre);
         return genre;
     }
-    private Account createAccount(Long imdbAccountID){
-        Account account = new Account(imdbAccountID);
-        account = accountService.add(account);
-        return account;
-    }
+
 }

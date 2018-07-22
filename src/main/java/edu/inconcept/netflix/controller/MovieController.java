@@ -29,33 +29,30 @@ public class MovieController {
         return new ResponseEntity<>(movieService.getAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movies/genre/{name}")
-    public ResponseEntity<List<MovieDto>> getMoviesByGenre(@PathVariable String name) {
+    @RequestMapping(method = RequestMethod.GET, value = "/movies/genre")
+    public ResponseEntity<List<MovieDto>> getMoviesByGenre(@RequestParam String name) {
         return new ResponseEntity<>(movieService.getMoviesByGenre(name), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movies/{rating}")
-    public ResponseEntity<List<MovieDto>> getMoviesByRating(@PathVariable Double rating) {
-        return new ResponseEntity<>(movieService.getMoviesByRating(rating), HttpStatus.OK);
+
+
+    @RequestMapping(method = RequestMethod.GET, value = "/movies/provideRating")
+    public ResponseEntity<List<Movie>> getMoviesGreaterAvgRating(@RequestParam Double rating) {
+        return new ResponseEntity<>(movieService.getMoviesGreaterAvgRating(rating), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movies/{greaterAvgRating}")
-    public ResponseEntity<List<MovieDto>> getMoviesGreaterAvgRating(@PathVariable Double greaterAvgRating) {
-        return new ResponseEntity<>(movieService.getMoviesGreaterAvgRating(greaterAvgRating), HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/movies/director/{name}")
-    public ResponseEntity<List<MovieDto>> getMoviesByDirector(@PathVariable String name) {
+    @RequestMapping(method = RequestMethod.GET, value = "/movies/director")
+    public ResponseEntity<List<MovieDto>> getMoviesByDirector(@RequestParam String name) {
         return new ResponseEntity<>(movieService.getMoviesByDirector(name), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movies/{title}")
-    public ResponseEntity<MovieDto> getMoviesByTitle(@PathVariable String title) {
+    @RequestMapping(method = RequestMethod.GET, value = "/movies/title")
+    public ResponseEntity<Movie> getMoviesByTitle(@RequestParam String title) {
         return new ResponseEntity<>(movieService.getMoviesByTitle(title), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/movies/page/{pageNumber}")
-    public ResponseEntity<List<MovieDto>> getByPage(@PathVariable Integer pageNumber) {
+    @RequestMapping(method = RequestMethod.GET, value = "/movies/page")
+    public ResponseEntity<List<Movie>> getByPage(@RequestParam Integer pageNumber) {
         return new ResponseEntity<>(movieService.getByPage(pageNumber), HttpStatus.OK);
     }
 

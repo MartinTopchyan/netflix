@@ -5,18 +5,18 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role")
-public class Role  {
+@Table(name = "system_role")
+public class SystemRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "role")
     private String role;
 
-    public Role() {
+    public SystemRole() {
     }
 
-    public Role(String role) {
+    public SystemRole(String role) {
         this.role = role;
     }
 
