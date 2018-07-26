@@ -54,8 +54,8 @@ public class ImdbCSVParserService {
             String releaseDate = csvRecord.get("Release Date (month/day/year)").trim();
             String url = csvRecord.get("url").trim();
 
-            String path = filePath.getName(2).toString();
-            String fileName = path.substring(0,8);
+            String path = filePath.getFileName().toString();
+            String fileName = path.substring(0,path.lastIndexOf("."));
             Long imdbAccountId = Long.parseLong(fileName);
 
 

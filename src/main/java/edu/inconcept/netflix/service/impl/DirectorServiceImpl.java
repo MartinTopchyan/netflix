@@ -5,8 +5,13 @@ import edu.inconcept.netflix.repository.DirectorRepository;
 import edu.inconcept.netflix.service.DirectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.List;
 
 @Service
+@Transactional
 public class DirectorServiceImpl implements DirectorService {
 
     @Autowired
@@ -20,5 +25,10 @@ public class DirectorServiceImpl implements DirectorService {
     @Override
     public Director save(Director director) {
         return directorRepository.save(director);
+    }
+
+    @Override
+    public List<Director> bulkInsert(Collection<Director> values) {
+        return directorRepository.saveAll(values);
     }
 }

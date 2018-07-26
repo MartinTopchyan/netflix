@@ -10,12 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.List;
 
 @Service
+@Transactional
 public class MovieService {
     private MovieRepository movieRepository;
 
@@ -67,5 +70,9 @@ public class MovieService {
     public Movie getMoviesByTitle(String title){
         Movie movie = movieRepository.findMovieByName(title);
         return movie;
+    }
+
+    public List<Movie> bulkInsert(Collection<Movie> values) {
+        return movieRepository.saveAll(values);
     }
 }
